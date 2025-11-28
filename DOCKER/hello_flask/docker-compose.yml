@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  web:
+    image: my-flask-app:multistage
+    depends_on:
+      - mydb
+    environment:
+      DB_HOST: mydb
+      DB_USER: root
+      DB_PASSWORD: my-secret-pw
+      DB_NAME: myappdb
+    expose:
+      - "5004"   # internal only, not published to host
+
+  mydb:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: myappdb
